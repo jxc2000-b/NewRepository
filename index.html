@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes</title>
     <style>
+        /* ==================== GLOBAL STYLES ==================== */
         * {
             margin: 0;
             padding: 0;
@@ -12,148 +13,193 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f5f5f5;
+            /* Using a more creative font stack with Google Fonts feel */
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100vh;
             overflow: hidden;
         }
 
-        /* Password Screen */
+        /* ==================== PASSWORD SCREEN STYLES ==================== */
+        /* Main container for the lock screen */
         #password-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
+        /* Title styling with modern font */
         #password-screen h1 {
+            margin-bottom: 40px;
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Container for the 6 PIN input boxes */
+        #pin-container {
+            display: flex;
+            gap: 12px;
             margin-bottom: 20px;
-            color: #333;
+        }
+
+        /* Individual PIN digit boxes - styled like iPhone passcode */
+        .pin-box {
+            width: 50px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 32px;
-            font-weight: 300;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        #password-input {
-            padding: 12px 20px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            width: 300px;
-            margin-bottom: 15px;
-            outline: none;
-            transition: border-color 0.2s;
+        /* Active PIN box gets a subtle glow */
+        .pin-box.active {
+            border-color: #ffffff;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
-        #password-input:focus {
-            border-color: #007aff;
+        /* Filled PIN box styling */
+        .pin-box.filled {
+            background-color: #ffffff;
+            border-color: #667eea;
         }
 
-        #unlock-button {
-            padding: 12px 40px;
-            font-size: 16px;
-            background-color: #007aff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        /* Hidden input for keyboard support */
+        #pin-input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
         }
 
-        #unlock-button:hover {
-            background-color: #0051d5;
-        }
-
+        /* Error message styling */
         .error {
-            color: #ff3b30;
-            margin-top: 10px;
+            color: #ffffff;
+            margin-top: 15px;
             font-size: 14px;
+            font-weight: 500;
+            background-color: rgba(255, 59, 48, 0.9);
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Main App */
+        /* ==================== MAIN APP STYLES ==================== */
+        /* Main application container - hidden until password is entered */
         #app {
             display: none;
             height: 100vh;
             flex-direction: column;
+            background: #ffffff;
         }
 
-        /* Header */
+        /* ==================== HEADER STYLES ==================== */
+        /* Top header bar with title and controls */
         #header {
-            background-color: #fff;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-bottom: none;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
+        /* App title in header */
         #header h1 {
-            font-size: 20px;
-            font-weight: 400;
-            color: #333;
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.5px;
         }
 
+        /* Control buttons container */
         #controls {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
+        /* Download and Upload buttons */
         .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             font-size: 14px;
-            border: 1px solid #007aff;
-            background-color: white;
-            color: #007aff;
-            border-radius: 6px;
+            font-weight: 500;
+            border: 2px solid #ffffff;
+            background-color: transparent;
+            color: #ffffff;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #007aff;
-            color: white;
+            background-color: #ffffff;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        /* Tabs */
+        /* ==================== TAB NAVIGATION STYLES ==================== */
+        /* Tab container */
         #tabs {
             display: flex;
-            background-color: #fff;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 0 20px;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            padding: 0 30px;
         }
 
+        /* Individual tab button */
         .tab {
-            padding: 12px 24px;
+            padding: 16px 32px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-            color: #666;
-            font-size: 14px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: #6c757d;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
         }
 
         .tab:hover {
-            color: #333;
+            color: #495057;
+            background-color: rgba(102, 126, 234, 0.05);
         }
 
+        /* Active tab indicator */
         .tab.active {
-            color: #007aff;
-            border-bottom-color: #007aff;
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background-color: #ffffff;
         }
 
-        /* Content Area */
+        /* ==================== CONTENT AREA STYLES ==================== */
+        /* Main content container */
         #content {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            background-color: #ffffff;
         }
 
+        /* Individual note container */
         .note-container {
             display: none;
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             overflow-y: auto;
         }
 
@@ -162,47 +208,98 @@
             flex-direction: column;
         }
 
+        /* Textarea styling - creative fonts for better readability */
         textarea {
             flex: 1;
             width: 100%;
             border: none;
             outline: none;
-            font-family: inherit;
+            /* Using a more readable font for note content */
+            font-family: 'Georgia', 'Times New Roman', serif;
             resize: none;
-            line-height: 1.6;
+            line-height: 1.8;
             background-color: transparent;
-            color: #333;
+            color: #2c3e50;
+            transition: font-size 0.3s ease;
         }
 
-        /* Hidden File Input */
+        /* Placeholder text styling */
+        textarea::placeholder {
+            color: #adb5bd;
+            font-style: italic;
+        }
+
+        /* ==================== UTILITY STYLES ==================== */
+        /* Hidden file input for upload functionality */
         #file-input {
             display: none;
         }
 
-        /* Responsive */
+        /* ==================== ANIMATIONS ==================== */
+        /* Shake animation for incorrect PIN */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        /* Mobile and tablet optimizations */
         @media (max-width: 600px) {
+            #header {
+                padding: 15px 20px;
+            }
+
             #header h1 {
-                font-size: 16px;
+                font-size: 18px;
             }
 
             .btn {
-                padding: 6px 12px;
+                padding: 8px 14px;
                 font-size: 12px;
             }
 
             .tab {
-                padding: 10px 16px;
+                padding: 12px 20px;
                 font-size: 13px;
+            }
+
+            .note-container {
+                padding: 20px;
+            }
+
+            #pin-container {
+                gap: 8px;
+            }
+
+            .pin-box {
+                width: 45px;
+                height: 55px;
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Password Screen -->
+    <!-- ==================== PASSWORD/PIN SCREEN ==================== -->
+    <!-- This screen appears first and requires a 6-digit PIN to unlock -->
     <div id="password-screen">
         <h1>🔒 Notes</h1>
-        <input type="password" id="password-input" placeholder="Enter password" />
-        <button id="unlock-button">Unlock</button>
+        
+        <!-- PIN input container with 6 digit blocks (iPhone style) -->
+        <div id="pin-container">
+            <div class="pin-box" data-index="0"></div>
+            <div class="pin-box" data-index="1"></div>
+            <div class="pin-box" data-index="2"></div>
+            <div class="pin-box" data-index="3"></div>
+            <div class="pin-box" data-index="4"></div>
+            <div class="pin-box" data-index="5"></div>
+        </div>
+        
+        <!-- Hidden input to capture keyboard input -->
+        <input type="number" id="pin-input" maxlength="6" />
+        
+        <!-- Error message display -->
         <div id="error-message" class="error"></div>
     </div>
 
@@ -238,64 +335,158 @@
     </div>
 
     <script>
-        // Configuration
-        const PASSWORD = "123456"; // Hardcoded password
-        const STORAGE_KEY = "notes_data";
-        const FONT_SIZE_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-        const MIN_FONT_SIZE = 14;
-        const MAX_FONT_SIZE = 24;
+        // ==================== CONFIGURATION CONSTANTS ====================
+        // These control the behavior of the app
+        
+        const PASSWORD = "123456"; // 6-digit PIN to unlock the app
+        const STORAGE_KEY = "notes_data"; // Key for localStorage persistence
+        const FONT_SIZE_INTERVAL = 2 * 60 * 60 * 1000; // Font grows every 2 hours (in milliseconds)
+        const MIN_FONT_SIZE = 14; // Starting font size in pixels
+        const MAX_FONT_SIZE = 100; // Maximum font size for aggressive growth (was 24)
 
-        // State
-        let currentTab = 0;
+        // ==================== APPLICATION STATE ====================
+        // Global state object that tracks current tab and note data
+        
+        let currentTab = 0; // Currently active tab (0, 1, or 2)
+        let pinValue = ""; // Current PIN being entered
+        
+        // Main data structure stored in localStorage
         let notesData = {
-            notes: ["", "", ""],
-            timestamps: [Date.now(), Date.now(), Date.now()],
-            fontSizes: [MIN_FONT_SIZE, MIN_FONT_SIZE, MIN_FONT_SIZE]
+            notes: ["", "", ""], // Text content for each of the 3 notes
+            timestamps: [Date.now(), Date.now(), Date.now()], // When each note was last created/modified
+            fontSizes: [MIN_FONT_SIZE, MIN_FONT_SIZE, MIN_FONT_SIZE] // Current font size for each note
         };
 
-        // Password Screen Logic
+        // ==================== DOM ELEMENT REFERENCES ====================
+        // Cache DOM elements for better performance
+        
         const passwordScreen = document.getElementById("password-screen");
-        const passwordInput = document.getElementById("password-input");
-        const unlockButton = document.getElementById("unlock-button");
+        const pinBoxes = document.querySelectorAll(".pin-box");
+        const pinInput = document.getElementById("pin-input");
         const errorMessage = document.getElementById("error-message");
         const app = document.getElementById("app");
 
-        function checkPassword() {
-            if (passwordInput.value === PASSWORD) {
-                passwordScreen.style.display = "none";
-                app.style.display = "flex";
-                loadNotes();
-                updateFontSizes();
-                startFontSizeUpdater();
-            } else {
-                errorMessage.textContent = "Incorrect password";
-                passwordInput.value = "";
-            }
+        // ==================== PIN/PASSWORD SCREEN LOGIC ====================
+        
+        /**
+         * Initialize PIN input system
+         * Sets up click handlers to focus on the hidden input for keyboard entry
+         */
+        function initPinInput() {
+            // Click anywhere on password screen to focus PIN input
+            passwordScreen.addEventListener("click", () => {
+                pinInput.focus();
+            });
+
+            // Auto-focus on page load
+            pinInput.focus();
         }
 
-        unlockButton.addEventListener("click", checkPassword);
-        passwordInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
+        /**
+         * Handle PIN digit entry
+         * Updates the visual PIN boxes as user types
+         */
+        pinInput.addEventListener("input", (e) => {
+            // Get only numeric digits from input
+            pinValue = e.target.value.replace(/\D/g, '').substring(0, 6);
+            e.target.value = pinValue;
+
+            // Update visual PIN boxes
+            updatePinDisplay();
+
+            // Auto-check password when 6 digits are entered
+            if (pinValue.length === 6) {
                 checkPassword();
             }
         });
 
-        // Load notes from localStorage
+        /**
+         * Handle backspace for PIN deletion
+         */
+        pinInput.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace") {
+                pinValue = pinValue.slice(0, -1);
+                updatePinDisplay();
+            }
+        });
+
+        /**
+         * Update the visual display of PIN boxes
+         * Shows filled circles for entered digits
+         */
+        function updatePinDisplay() {
+            pinBoxes.forEach((box, index) => {
+                // Clear previous content
+                box.textContent = "";
+                box.classList.remove("filled", "active");
+
+                // Show bullet for filled digits
+                if (index < pinValue.length) {
+                    box.textContent = "●";
+                    box.classList.add("filled");
+                } else if (index === pinValue.length) {
+                    // Highlight the next box to be filled
+                    box.classList.add("active");
+                }
+            });
+        }
+
+        /**
+         * Verify entered PIN and unlock app if correct
+         */
+        function checkPassword() {
+            if (pinValue === PASSWORD) {
+                // Correct PIN - unlock the app
+                passwordScreen.style.display = "none";
+                app.style.display = "flex";
+                
+                // Load saved notes and start font size tracking
+                loadNotes();
+                updateFontSizes();
+                startFontSizeUpdater();
+            } else {
+                // Wrong PIN - show error and reset
+                errorMessage.textContent = "Incorrect PIN";
+                pinValue = "";
+                pinInput.value = "";
+                updatePinDisplay();
+                
+                // Shake animation for error feedback
+                passwordScreen.style.animation = "shake 0.5s";
+                setTimeout(() => {
+                    passwordScreen.style.animation = "";
+                    errorMessage.textContent = "";
+                }, 2000);
+            }
+        }
+
+        // Initialize PIN input system on page load
+        initPinInput();
+
+        // ==================== NOTE MANAGEMENT FUNCTIONS ====================
+        
+        /**
+         * Load notes from browser's localStorage
+         * Restores saved notes, timestamps, and font sizes from previous sessions
+         */
         function loadNotes() {
             const savedData = localStorage.getItem(STORAGE_KEY);
+            
             if (savedData) {
                 try {
+                    // Parse saved data
                     notesData = JSON.parse(savedData);
-                    // Ensure we have all required fields
+                    
+                    // Ensure we have all required fields (for backwards compatibility)
                     if (!notesData.notes) notesData.notes = ["", "", ""];
                     if (!notesData.timestamps) notesData.timestamps = [Date.now(), Date.now(), Date.now()];
                     if (!notesData.fontSizes) notesData.fontSizes = [MIN_FONT_SIZE, MIN_FONT_SIZE, MIN_FONT_SIZE];
                 } catch (e) {
-                    console.error("Error loading notes:", e);
+                    console.error("Error loading notes from localStorage:", e);
                 }
             }
 
-            // Load notes into textareas
+            // Load content and apply font sizes to all textareas
             for (let i = 0; i < 3; i++) {
                 const textarea = document.getElementById(`note-${i}`);
                 textarea.value = notesData.notes[i] || "";
@@ -303,37 +494,67 @@
             }
         }
 
-        // Save notes to localStorage
+        /**
+         * Save current notes to localStorage
+         * Persists all note content, timestamps, and font sizes
+         */
         function saveNotes() {
+            // Update note content from textareas
             for (let i = 0; i < 3; i++) {
                 const textarea = document.getElementById(`note-${i}`);
                 notesData.notes[i] = textarea.value;
             }
+            
+            // Save to localStorage
             localStorage.setItem(STORAGE_KEY, JSON.stringify(notesData));
         }
 
-        // Update font sizes based on time elapsed
+        // ==================== FONT SIZE GROWTH SYSTEM ====================
+        // This system aggressively grows font size over time to remind you of tasks
+        
+        /**
+         * Update font sizes based on elapsed time
+         * Font grows larger the longer a note sits without being deleted
+         * This is intentional to nudge you to take action on old notes!
+         */
         function updateFontSizes() {
             const now = Date.now();
+            
             for (let i = 0; i < 3; i++) {
                 const textarea = document.getElementById(`note-${i}`);
-                const timeSinceLastEdit = now - notesData.timestamps[i];
-                const hoursElapsed = timeSinceLastEdit / FONT_SIZE_INTERVAL;
+                
+                // Calculate time since note was created/last modified
+                const timeSinceCreation = now - notesData.timestamps[i];
+                const hoursElapsed = timeSinceCreation / FONT_SIZE_INTERVAL;
+                
+                // Calculate new font size (grows over time, never shrinks)
                 const newFontSize = Math.min(MAX_FONT_SIZE, MIN_FONT_SIZE + Math.floor(hoursElapsed));
                 
-                notesData.fontSizes[i] = newFontSize;
-                textarea.style.fontSize = `${newFontSize}px`;
+                // Only increase font size, never decrease
+                if (newFontSize > notesData.fontSizes[i]) {
+                    notesData.fontSizes[i] = newFontSize;
+                    textarea.style.fontSize = `${newFontSize}px`;
+                }
             }
+            
+            // Save updated font sizes
             saveNotes();
         }
 
-        // Start periodic font size updater
+        /**
+         * Start periodic font size updater
+         * Checks every minute if font sizes should grow
+         */
         function startFontSizeUpdater() {
-            // Update every minute
+            // Update font sizes every minute
             setInterval(updateFontSizes, 60 * 1000);
         }
 
-        // Tab switching
+        // ==================== TAB SWITCHING LOGIC ====================
+        
+        /**
+         * Setup tab navigation between the 3 notes
+         */
         const tabs = document.querySelectorAll(".tab");
         const noteContainers = document.querySelectorAll(".note-container");
 
@@ -341,74 +562,127 @@
             tab.addEventListener("click", () => {
                 const tabIndex = parseInt(tab.dataset.tab);
                 
-                // Update active states
+                // Remove active class from all tabs and containers
                 tabs.forEach(t => t.classList.remove("active"));
                 noteContainers.forEach(nc => nc.classList.remove("active"));
                 
+                // Set clicked tab and its container as active
                 tab.classList.add("active");
                 noteContainers[tabIndex].classList.add("active");
                 
+                // Update current tab state
                 currentTab = tabIndex;
             });
         });
 
-        // Auto-save on input
+        // ==================== AUTO-SAVE ON INPUT ====================
+        // Note: Font size does NOT reset when typing - it only grows over time
+        // This is intentional to create urgency around old notes
+        
+        /**
+         * Setup auto-save for all textareas
+         * Saves content immediately as user types
+         * IMPORTANT: Font size is NOT reset on typing - only deletion resets it
+         */
         for (let i = 0; i < 3; i++) {
             const textarea = document.getElementById(`note-${i}`);
+            
             textarea.addEventListener("input", () => {
-                // Reset timestamp and font size when user types
-                notesData.timestamps[i] = Date.now();
-                notesData.fontSizes[i] = MIN_FONT_SIZE;
-                textarea.style.fontSize = `${MIN_FONT_SIZE}px`;
+                // If note is being completely deleted, reset timestamp and font
+                if (textarea.value.trim() === "") {
+                    notesData.timestamps[i] = Date.now();
+                    notesData.fontSizes[i] = MIN_FONT_SIZE;
+                    textarea.style.fontSize = `${MIN_FONT_SIZE}px`;
+                }
+                
+                // Save note content (font size continues to grow based on timestamp)
                 saveNotes();
             });
         }
 
-        // Download functionality
+        // ==================== BACKUP & RESTORE FUNCTIONALITY ====================
+        
+        /**
+         * Download notes as JSON backup file
+         * Creates a file with current date in filename for easy organization
+         */
         const downloadBtn = document.getElementById("download-btn");
         downloadBtn.addEventListener("click", () => {
-            saveNotes(); // Ensure latest data is saved
+            // Ensure all current data is saved first
+            saveNotes();
+            
+            // Convert notes data to formatted JSON string
             const dataStr = JSON.stringify(notesData, null, 2);
+            
+            // Create a downloadable blob
             const dataBlob = new Blob([dataStr], { type: "application/json" });
             const url = URL.createObjectURL(dataBlob);
+            
+            // Create temporary link and trigger download
             const link = document.createElement("a");
             link.href = url;
             link.download = `notes_backup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(link);
             link.click();
+            
+            // Clean up
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         });
 
-        // Upload functionality
+        /**
+         * Upload and restore notes from backup file
+         * Replaces current notes with data from selected JSON file
+         */
         const uploadBtn = document.getElementById("upload-btn");
         const fileInput = document.getElementById("file-input");
 
+        // Trigger file picker when upload button is clicked
         uploadBtn.addEventListener("click", () => {
             fileInput.click();
         });
 
+        // Handle file selection and restore data
         fileInput.addEventListener("change", (e) => {
             const file = e.target.files[0];
+            
             if (file) {
                 const reader = new FileReader();
+                
                 reader.onload = (event) => {
                     try {
+                        // Parse and validate uploaded JSON
                         const uploadedData = JSON.parse(event.target.result);
+                        
+                        // Replace current data with uploaded data
                         notesData = uploadedData;
+                        
+                        // Save to localStorage
                         localStorage.setItem(STORAGE_KEY, JSON.stringify(notesData));
+                        
+                        // Reload notes to display restored content
                         loadNotes();
+                        
                         alert("Notes restored successfully!");
                     } catch (error) {
                         alert("Error reading file. Please make sure it's a valid notes backup file.");
                     }
                 };
+                
+                // Read file as text
                 reader.readAsText(file);
             }
-            fileInput.value = ""; // Reset file input
+            
+            // Reset file input so same file can be uploaded again
+            fileInput.value = "";
         });
 
-        // Auto-save before page unload
+        // ==================== PAGE LIFECYCLE ====================
+        
+        /**
+         * Auto-save notes before user closes or refreshes the page
+         * Ensures no data is lost
+         */
         window.addEventListener("beforeunload", saveNotes);
     </script>
 </body>
