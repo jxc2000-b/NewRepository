@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Password Screen */
+        #password-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        #password-screen h1 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+            font-weight: 300;
+        }
+
+        #password-input {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 300px;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #password-input:focus {
+            border-color: #007aff;
+        }
+
+        #unlock-button {
+            padding: 12px 40px;
+            font-size: 16px;
+            background-color: #007aff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #unlock-button:hover {
+            background-color: #0051d5;
+        }
+
+        .error {
+            color: #ff3b30;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Main App */
+        #app {
+            display: none;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Header */
+        #header {
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        #header h1 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #333;
+        }
+
+        #controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: 1px solid #007aff;
+            background-color: white;
+            color: #007aff;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #007aff;
+            color: white;
+        }
+
+        /* Tabs */
+        #tabs {
+            display: flex;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 20px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .tab:hover {
+            color: #333;
+        }
+
+        .tab.active {
+            color: #007aff;
+            border-bottom-color: #007aff;
+        }
+
+        /* Content Area */
+        #content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .note-container {
+            display: none;
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .note-container.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            flex: 1;
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            resize: none;
+            line-height: 1.6;
+            background-color: transparent;
+            color: #333;
+        }
+
+        /* Hidden File Input */
+        #file-input {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #header h1 {
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .tab {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Screen -->
+    <div id="password-screen">
+        <h1>🔒 Notes</h1>
+        <input type="password" id="password-input" placeholder="Enter password" />
+        <button id="unlock-button">Unlock</button>
+        <div id="error-message" class="error"></div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app">
+        <div id="header">
+            <h1>📝 Notes</h1>
+            <div id="controls">
+                <button class="btn" id="download-btn">Download</button>
+                <button class="btn" id="upload-btn">Upload</button>
+            </div>
+        </div>
+
+        <div id="tabs">
+            <div class="tab active" data-tab="0">Note 1</div>
+            <div class="tab" data-tab="1">Note 2</div>
+            <div class="tab" data-tab="2">Note 3</div>
+        </div>
+
+        <div id="content">
+            <div class="note-container active" data-note="0">
+                <textarea id="note-0" placeholder="Start typing..."></textarea>
+            </div>
+            <div class="note-container" data-note="1">
+                <textarea id="note-1" placeholder="Start typing..."></textarea>
+            </div>
+            <div class="note-container" data-note="2">
+                <textarea id="note-2" placeholder="Start typing..."></textarea>
+            </div>
+        </div>
+
+        <input type="file" id="file-input" accept=".json" />
+    </div>
+
+    <script>
+        // Configuration
+        const PASSWORD = "123456"; // Hardcoded password
+        const STORAGE_KEY = "notes_data";
+        const FONT_SIZE_INTERVAL = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+        const MIN_FONT_SIZE = 14;
+        const MAX_FONT_SIZE = 24;
+
+        // State
+        let currentTab = 0;
+        let notesData = {
+            notes: ["", "", ""],
+            timestamps: [Date.now(), Date.now(), Date.now()],
+            fontSizes: [MIN_FONT_SIZE, MIN_FONT_SIZE, MIN_FONT_SIZE]
+        };
+
+        // Password Screen Logic
+        const passwordScreen = document.getElementById("password-screen");
+        const passwordInput = document.getElementById("password-input");
+        const unlockButton = document.getElementById("unlock-button");
+        const errorMessage = document.getElementById("error-message");
+        const app = document.getElementById("app");
+
+        function checkPassword() {
+            if (passwordInput.value === PASSWORD) {
+                passwordScreen.style.display = "none";
+                app.style.display = "flex";
+                loadNotes();
+                updateFontSizes();
+                startFontSizeUpdater();
+            } else {
+                errorMessage.textContent = "Incorrect password";
+                passwordInput.value = "";
+            }
+        }
+
+        unlockButton.addEventListener("click", checkPassword);
+        passwordInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                checkPassword();
+            }
+        });
+
+        // Load notes from localStorage
+        function loadNotes() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                try {
+                    notesData = JSON.parse(savedData);
+                    // Ensure we have all required fields
+                    if (!notesData.notes) notesData.notes = ["", "", ""];
+                    if (!notesData.timestamps) notesData.timestamps = [Date.now(), Date.now(), Date.now()];
+                    if (!notesData.fontSizes) notesData.fontSizes = [MIN_FONT_SIZE, MIN_FONT_SIZE, MIN_FONT_SIZE];
+                } catch (e) {
+                    console.error("Error loading notes:", e);
+                }
+            }
+
+            // Load notes into textareas
+            for (let i = 0; i < 3; i++) {
+                const textarea = document.getElementById(`note-${i}`);
+                textarea.value = notesData.notes[i] || "";
+                textarea.style.fontSize = `${notesData.fontSizes[i]}px`;
+            }
+        }
+
+        // Save notes to localStorage
+        function saveNotes() {
+            for (let i = 0; i < 3; i++) {
+                const textarea = document.getElementById(`note-${i}`);
+                notesData.notes[i] = textarea.value;
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(notesData));
+        }
+
+        // Update font sizes based on time elapsed
+        function updateFontSizes() {
+            const now = Date.now();
+            for (let i = 0; i < 3; i++) {
+                const textarea = document.getElementById(`note-${i}`);
+                const timeSinceLastEdit = now - notesData.timestamps[i];
+                const hoursElapsed = timeSinceLastEdit / FONT_SIZE_INTERVAL;
+                const newFontSize = Math.min(MAX_FONT_SIZE, MIN_FONT_SIZE + Math.floor(hoursElapsed));
+                
+                notesData.fontSizes[i] = newFontSize;
+                textarea.style.fontSize = `${newFontSize}px`;
+            }
+            saveNotes();
+        }
+
+        // Start periodic font size updater
+        function startFontSizeUpdater() {
+            // Update every minute
+            setInterval(updateFontSizes, 60 * 1000);
+        }
+
+        // Tab switching
+        const tabs = document.querySelectorAll(".tab");
+        const noteContainers = document.querySelectorAll(".note-container");
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                const tabIndex = parseInt(tab.dataset.tab);
+                
+                // Update active states
+                tabs.forEach(t => t.classList.remove("active"));
+                noteContainers.forEach(nc => nc.classList.remove("active"));
+                
+                tab.classList.add("active");
+                noteContainers[tabIndex].classList.add("active");
+                
+                currentTab = tabIndex;
+            });
+        });
+
+        // Auto-save on input
+        for (let i = 0; i < 3; i++) {
+            const textarea = document.getElementById(`note-${i}`);
+            textarea.addEventListener("input", () => {
+                // Reset timestamp and font size when user types
+                notesData.timestamps[i] = Date.now();
+                notesData.fontSizes[i] = MIN_FONT_SIZE;
+                textarea.style.fontSize = `${MIN_FONT_SIZE}px`;
+                saveNotes();
+            });
+        }
+
+        // Download functionality
+        const downloadBtn = document.getElementById("download-btn");
+        downloadBtn.addEventListener("click", () => {
+            saveNotes(); // Ensure latest data is saved
+            const dataStr = JSON.stringify(notesData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `notes_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        });
+
+        // Upload functionality
+        const uploadBtn = document.getElementById("upload-btn");
+        const fileInput = document.getElementById("file-input");
+
+        uploadBtn.addEventListener("click", () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const uploadedData = JSON.parse(event.target.result);
+                        notesData = uploadedData;
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(notesData));
+                        loadNotes();
+                        alert("Notes restored successfully!");
+                    } catch (error) {
+                        alert("Error reading file. Please make sure it's a valid notes backup file.");
+                    }
+                };
+                reader.readAsText(file);
+            }
+            fileInput.value = ""; // Reset file input
+        });
+
+        // Auto-save before page unload
+        window.addEventListener("beforeunload", saveNotes);
+    </script>
+</body>
+</html>
