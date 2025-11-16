@@ -1,34 +1,60 @@
 # Notes App
 
-A simple, lightweight note-taking web application with password protection and persistent storage.
+Lightweight note-taking web app with iPhone-style PIN, 3 tabs, auto-save, and aggressive font growth.
+
+## Quick Start
+
+**Local:**
+```bash
+# Open directly
+open index.html
+
+# Or serve with Python
+python3 -m http.server 8080
+# Visit http://localhost:8080
+```
+
+**Deploy:**
+- GitHub Pages: Push to `gh-pages` branch
+- Netlify/Vercel: Drag & drop `index.html`
+- Any static host: Upload `index.html`
+
+**PIN:** `123456`
 
 ## Features
 
-- 🔒 **Password Protection**: Secure access with a hardcoded password
-- 📝 **3 Separate Tabs**: Keep different notes organized
-- 💾 **Auto-Save**: Notes are automatically saved to browser's localStorage
-- ⬇️ **Download Backup**: Export your notes as JSON for safekeeping
-- ⬆️ **Upload Restore**: Import previously downloaded backups
-- 🔤 **Dynamic Font Sizing**: Font size increases gradually based on time since last edit (resets when you type)
+- 🔒 iPhone-style 6-digit PIN
+- 📝 3 separate note tabs
+- 💾 Auto-save to localStorage
+- ⬇️ Download/Upload JSON backups
+- 📈 Font grows 14px→100px over time (doesn't reset on typing)
 
-## Usage
+## Testing Notes
 
-1. Open `index.html` in your web browser
-2. Enter the password: `123456`
-3. Start taking notes!
+**Authentication:**
+- ✅ PIN blocks fill as you type
+- ✅ Auto-unlock at 6 digits
+- ✅ Wrong PIN shows error + shake
+- ✅ Keyboard entry works
 
-## Technical Details
+**Notes:**
+- ✅ Content persists after reload
+- ✅ Tab switching preserves content
+- ✅ Auto-save on every keystroke
+- ✅ All 3 tabs work independently
 
-- **Storage**: Uses browser's localStorage (no server required)
-- **Password**: `123456` (can be changed in the JavaScript code)
-- **Font Growth**: Increases by 1px every 2 hours (from 14px to max 24px)
-- **Compatibility**: Works in all modern browsers
+**Font Growth:**
+- ✅ Starts at 14px
+- ✅ Grows 1px per 2 hours (max 100px)
+- ✅ Does NOT reset when typing
+- ✅ Only resets on full deletion
 
-## How It Works
+**Backup/Restore:**
+- ✅ Download creates valid JSON
+- ✅ Upload restores all 3 notes
+- ✅ Timestamps preserved
 
-- Notes are stored locally in your browser
-- Each note has its own timestamp
-- When you type, the font size resets to minimum and timestamp updates
-- Font size gradually increases if note is left untouched
-- Download creates a JSON backup file
-- Upload restores from a JSON backup file
+**Browser Testing:**
+- ✅ Chrome/Edge/Safari/Firefox
+- ✅ Mobile responsive
+- ✅ localStorage works across sessions
