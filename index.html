@@ -111,19 +111,17 @@
         #header {
             background: #2c2c2c;
             border-bottom: 1px solid #444;
-            padding: 20px 30px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         /* App title in header */
         #header h1 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 400;
             color: #ffffff;
-            letter-spacing: -0.5px;
         }
 
         /* Control buttons container */
@@ -132,50 +130,45 @@
             gap: 12px;
         }
 
-        /* Download and Upload buttons */
+        /* Download and Upload buttons - minimal icon style */
         .btn {
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 2px solid #888;
+            padding: 8px;
+            font-size: 20px;
+            border: none;
             background-color: transparent;
             color: #ffffff;
-            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s ease;
+            opacity: 0.7;
         }
 
         .btn:hover {
-            background-color: #444;
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 1;
         }
 
         /* ==================== TAB NAVIGATION STYLES ==================== */
         /* Tab container */
         #tabs {
             display: flex;
-            background-color: #e5e5e5;
-            border-bottom: 2px solid #ccc;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
             padding: 0 30px;
         }
 
         /* Individual tab button */
         .tab {
-            padding: 16px 32px;
+            padding: 12px 24px;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            color: #666;
-            font-size: 15px;
-            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s ease;
+            color: #888;
+            font-size: 14px;
+            font-weight: 400;
             position: relative;
         }
 
         .tab:hover {
-            color: #333;
-            background-color: rgba(0, 0, 0, 0.05);
+            color: #555;
         }
 
         /* Active tab indicator */
@@ -208,16 +201,16 @@
             flex-direction: column;
         }
 
-        /* Textarea styling - creative fonts for better readability */
+        /* Textarea styling - monospace for code/notes */
         textarea {
             flex: 1;
             width: 100%;
             border: none;
             outline: none;
-            /* Using a more readable font for note content */
-            font-family: 'Georgia', 'Times New Roman', serif;
+            /* Using monospace font for note content */
+            font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
             resize: none;
-            line-height: 1.8;
+            line-height: 1.6;
             background-color: transparent;
             color: #1a1a1a;
             transition: font-size 0.3s ease;
@@ -308,8 +301,8 @@
         <div id="header">
             <h1>📝 Notes</h1>
             <div id="controls">
-                <button class="btn" id="download-btn">Download</button>
-                <button class="btn" id="upload-btn">Upload</button>
+                <button class="btn" id="download-btn" title="Download">⬇</button>
+                <button class="btn" id="upload-btn" title="Upload">⬆</button>
             </div>
         </div>
 
