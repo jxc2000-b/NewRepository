@@ -15,7 +15,7 @@
         body {
             /* Using a more creative font stack with Google Fonts feel */
             font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
             height: 100vh;
             overflow: hidden;
         }
@@ -28,7 +28,7 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #2c2c2c;
         }
 
         /* Title styling with modern font */
@@ -52,30 +52,30 @@
         .pin-box {
             width: 50px;
             height: 60px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            background-color: #3a3a3a;
+            border: 2px solid #555;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
             font-weight: 600;
-            color: #333;
+            color: #fff;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         /* Active PIN box gets a subtle glow */
         .pin-box.active {
-            border-color: #ffffff;
-            background-color: #ffffff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            border-color: #888;
+            background-color: #4a4a4a;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         /* Filled PIN box styling */
         .pin-box.filled {
-            background-color: #ffffff;
-            border-color: #667eea;
+            background-color: #4a4a4a;
+            border-color: #888;
         }
 
         /* Hidden input for keyboard support */
@@ -91,7 +91,7 @@
             margin-top: 15px;
             font-size: 14px;
             font-weight: 500;
-            background-color: rgba(255, 59, 48, 0.9);
+            background-color: #666;
             padding: 10px 20px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -109,21 +109,19 @@
         /* ==================== HEADER STYLES ==================== */
         /* Top header bar with title and controls */
         #header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-bottom: none;
-            padding: 20px 30px;
+            background: #2c2c2c;
+            border-bottom: 1px solid #444;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         /* App title in header */
         #header h1 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 400;
             color: #ffffff;
-            letter-spacing: -0.5px;
         }
 
         /* Control buttons container */
@@ -132,56 +130,51 @@
             gap: 12px;
         }
 
-        /* Download and Upload buttons */
+        /* Download and Upload buttons - minimal icon style */
         .btn {
-            padding: 10px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 2px solid #ffffff;
+            padding: 8px;
+            font-size: 20px;
+            border: none;
             background-color: transparent;
             color: #ffffff;
-            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s ease;
+            opacity: 0.7;
         }
 
         .btn:hover {
-            background-color: #ffffff;
-            color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 1;
         }
 
         /* ==================== TAB NAVIGATION STYLES ==================== */
         /* Tab container */
         #tabs {
             display: flex;
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
             padding: 0 30px;
         }
 
         /* Individual tab button */
         .tab {
-            padding: 16px 32px;
+            padding: 12px 24px;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            color: #6c757d;
-            font-size: 15px;
-            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s ease;
+            color: #888;
+            font-size: 14px;
+            font-weight: 400;
             position: relative;
         }
 
         .tab:hover {
-            color: #495057;
-            background-color: rgba(102, 126, 234, 0.05);
+            color: #555;
         }
 
         /* Active tab indicator */
         .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
+            color: #000;
+            border-bottom-color: #000;
             background-color: #ffffff;
         }
 
@@ -208,24 +201,24 @@
             flex-direction: column;
         }
 
-        /* Textarea styling - creative fonts for better readability */
+        /* Textarea styling - monospace for code/notes */
         textarea {
             flex: 1;
             width: 100%;
             border: none;
             outline: none;
-            /* Using a more readable font for note content */
-            font-family: 'Georgia', 'Times New Roman', serif;
+            /* Using monospace font for note content */
+            font-family: 'Monaco', 'Menlo', 'Consolas', 'Courier New', monospace;
             resize: none;
-            line-height: 1.8;
+            line-height: 1.6;
             background-color: transparent;
-            color: #2c3e50;
+            color: #1a1a1a;
             transition: font-size 0.3s ease;
         }
 
         /* Placeholder text styling */
         textarea::placeholder {
-            color: #adb5bd;
+            color: #999;
             font-style: italic;
         }
 
@@ -308,8 +301,8 @@
         <div id="header">
             <h1>📝 Notes</h1>
             <div id="controls">
-                <button class="btn" id="download-btn">Download</button>
-                <button class="btn" id="upload-btn">Upload</button>
+                <button class="btn" id="download-btn" title="Download">⬇</button>
+                <button class="btn" id="upload-btn" title="Upload">⬆</button>
             </div>
         </div>
 
@@ -603,16 +596,24 @@
         // ==================== BACKUP & RESTORE FUNCTIONALITY ====================
         
         /**
-         * Download notes as JSON backup file
-         * Creates a file with current date in filename for easy organization
+         * Download notes as JSON backup file for current tab only
+         * Creates a file with current date and tab number in filename
          */
         const downloadBtn = document.getElementById("download-btn");
         downloadBtn.addEventListener("click", () => {
             // Ensure all current data is saved first
             saveNotes();
             
-            // Convert notes data to formatted JSON string
-            const dataStr = JSON.stringify(notesData, null, 2);
+            // Create data object for current tab only
+            const currentTabData = {
+                note: notesData.notes[currentTab],
+                timestamp: notesData.timestamps[currentTab],
+                fontSize: notesData.fontSizes[currentTab],
+                tabIndex: currentTab
+            };
+            
+            // Convert current tab data to formatted JSON string
+            const dataStr = JSON.stringify(currentTabData, null, 2);
             
             // Create a downloadable blob
             const dataBlob = new Blob([dataStr], { type: "application/json" });
@@ -621,7 +622,7 @@
             // Create temporary link and trigger download
             const link = document.createElement("a");
             link.href = url;
-            link.download = `notes_backup_${new Date().toISOString().split('T')[0]}.json`;
+            link.download = `note${currentTab + 1}_backup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(link);
             link.click();
             
@@ -631,8 +632,8 @@
         });
 
         /**
-         * Upload and restore notes from backup file
-         * Replaces current notes with data from selected JSON file
+         * Upload and restore notes from backup file for current tab only
+         * Replaces current tab's data with data from selected JSON file
          */
         const uploadBtn = document.getElementById("upload-btn");
         const fileInput = document.getElementById("file-input");
@@ -654,18 +655,22 @@
                         // Parse and validate uploaded JSON
                         const uploadedData = JSON.parse(event.target.result);
                         
-                        // Replace current data with uploaded data
-                        notesData = uploadedData;
+                        // Restore only current tab's data
+                        notesData.notes[currentTab] = uploadedData.note || "";
+                        notesData.timestamps[currentTab] = uploadedData.timestamp || Date.now();
+                        notesData.fontSizes[currentTab] = uploadedData.fontSize || MIN_FONT_SIZE;
+                        
+                        // Update the textarea for current tab
+                        const textarea = document.getElementById(`note-${currentTab}`);
+                        textarea.value = notesData.notes[currentTab];
+                        textarea.style.fontSize = `${notesData.fontSizes[currentTab]}px`;
                         
                         // Save to localStorage
                         localStorage.setItem(STORAGE_KEY, JSON.stringify(notesData));
                         
-                        // Reload notes to display restored content
-                        loadNotes();
-                        
-                        alert("Notes restored successfully!");
+                        alert(`Note ${currentTab + 1} restored successfully!`);
                     } catch (error) {
-                        alert("Error reading file. Please make sure it's a valid notes backup file.");
+                        alert("Error reading file. Please make sure it's a valid note backup file.");
                     }
                 };
                 
